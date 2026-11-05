@@ -1,5 +1,10 @@
 # Les Odacieuses — Cockpit servi en fichiers statiques (hébergement OVH, Apache)
 Options -MultiViews -Indexes
+DirectoryIndex _shell.html
+
+# Fichiers techniques jamais servis (dossier .git créé par le déploiement OVH, README du dépôt)
+RedirectMatch 404 /\.git
+RedirectMatch 404 ^/README\.md$
 RewriteEngine On
 RewriteBase /
 
