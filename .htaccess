@@ -5,6 +5,9 @@ DirectoryIndex _shell.html
 # Fichiers techniques jamais servis (dossier .git créé par le déploiement OVH, README du dépôt)
 RedirectMatch 404 /\.git
 RedirectMatch 404 ^/README\.md$
+# PWA (DEPLOY-01) : type du manifeste
+AddType application/manifest+json .webmanifest
+
 RewriteEngine On
 RewriteBase /
 
@@ -29,5 +32,11 @@ RewriteRule ^ _shell.html [L]
   </FilesMatch>
   <FilesMatch "\.(js|css|woff2?|png|jpg|svg|webp)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # PWA (DEPLOY-01) : le service worker et le manifeste sont toujours revérifiés.
+  # Icônes et écrans de lancement : cache long comme les autres images ; pour les changer, changer leur nom.
+  <FilesMatch "^(sw\.js|manifest\.webmanifest)$">
+    Header set Cache-Control "no-cache"
+    Header set Service-Worker-Allowed "/"
   </FilesMatch>
 </IfModule>
